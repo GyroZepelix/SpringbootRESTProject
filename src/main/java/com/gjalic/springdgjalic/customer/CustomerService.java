@@ -1,8 +1,10 @@
-package com.gjalic.springdgjalic;
+package com.gjalic.springdgjalic.customer;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -52,7 +54,38 @@ public class CustomerService {
         repository.deleteById(id);
     }
 
+    //--------------------<  File Handling  >------------------------------
 
+    public Customer saveFile(MultipartFile file, long id) {
+        String documentName = file.getOriginalFilename();
+        try {
+            findById(id).getCustomerFiles().add((new File( documentName, file.getContentType(), file.getBytes())));
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+    public List<File> getFilesFromCustomer(long customerId) {
+        return findById(customerId).getCustomerFiles();
+    }
+    public File getFile(long customerId, long id) throws FileNotFoundException {
+        List<File> files = findById(customerId).getCustomerFiles();
+        for (File file : files) {
+            if (file.getID() == id) {
+                return file;
+            }
+        }
+        throw new FileNotFoundException(customerId, id);
+    }
+    
+    public List<File> getFiles() {
+        Iterable<Customer> customers = findAll();
+
+        ArrayList<File> files = new ArrayList<File>();
+        customers.forEach(customer -> files.addAll(customer.getCustomerFiles()));
+        return files;
+    }
 
 
 }

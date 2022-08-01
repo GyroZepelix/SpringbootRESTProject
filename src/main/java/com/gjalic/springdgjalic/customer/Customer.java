@@ -1,4 +1,4 @@
-package com.gjalic.springdgjalic;
+package com.gjalic.springdgjalic.customer;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -6,6 +6,9 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 @Entity
 @ToString
@@ -27,6 +30,8 @@ public class Customer {
     @Column(name="Aktivan")
     private Boolean active;
 
+    @OneToMany
+    private List<File> customerFiles = new ArrayList<File>();
     protected Customer() {}
 
     public Customer(String firstName, String lastName) {
@@ -39,4 +44,6 @@ public class Customer {
         this.lastName = lastName;
         this.active = active;
     }
+
+
 }

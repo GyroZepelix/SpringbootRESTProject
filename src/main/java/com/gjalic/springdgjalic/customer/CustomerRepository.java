@@ -1,4 +1,4 @@
-package com.gjalic.springdgjalic;
+package com.gjalic.springdgjalic.customer;
 
 import org.springframework.data.repository.CrudRepository;
 
