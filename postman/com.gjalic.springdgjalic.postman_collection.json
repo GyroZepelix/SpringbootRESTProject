@@ -153,6 +153,54 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "Upload Files to Customer",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "multipart/form-data",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "files",
+							"type": "file",
+							"src": "/C:/Users/dgjalic/Desktop/NeedLearn.txt"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{SpringAddress}}/customers/:ID/files",
+					"host": [
+						"{{SpringAddress}}"
+					],
+					"path": [
+						"customers",
+						":ID",
+						"files"
+					],
+					"query": [
+						{
+							"key": "files",
+							"value": null,
+							"disabled": true
+						}
+					],
+					"variable": [
+						{
+							"key": "ID",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
 		}
 	],
 	"variable": [
