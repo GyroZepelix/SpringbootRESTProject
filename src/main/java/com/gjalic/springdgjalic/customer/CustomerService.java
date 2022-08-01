@@ -58,37 +58,37 @@ public class CustomerService {
 
     //--------------------<  File Handling  >------------------------------
 
-    public File saveFile(MultipartFile file, long id) {
-        String documentName = file.getOriginalFilename();
-        try {
-            findById(id).getCustomerFiles().add((new File( documentName, file.getContentType(), file.getBytes())));
-        }
-
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-        return findById(id).getCustomerFiles().get();
-    }
-    public List<File> getFilesFromCustomer(long customerId) {
-        return findById(customerId).getCustomerFiles();
-    }
-    public File getFile(long customerId, long id) throws FileNotFoundException {
-        List<File> files = findById(customerId).getCustomerFiles();
-        for (File file : files) {
-            if (file.getID() == id) {
-                return file;
-            }
-        }
-        throw new FileNotFoundException(customerId, id);
-    }
-    
-    public List<File> getFiles() {
-        Iterable<Customer> customers = findAll();
-
-        ArrayList<File> files = new ArrayList<File>();
-        customers.forEach(customer -> files.addAll(customer.getCustomerFiles()));
-        return files;
-    }
+//    public File saveFile(MultipartFile file, long id) {
+//        String documentName = file.getOriginalFilename();
+//        try {
+//            findById(id).getCustomerFiles().add((new File( documentName, file.getContentType(), file.getBytes())));
+//        }
+//
+//        catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        return findById(id).getCustomerFiles().get();
+//    }
+//    public List<File> getFilesFromCustomer(long customerId) {
+//        return findById(customerId).getCustomerFiles();
+//    }
+//    public File getFile(long customerId, long id) throws FileNotFoundException {
+//        List<File> files = findById(customerId).getCustomerFiles();
+//        for (File file : files) {
+//            if (file.getID() == id) {
+//                return file;
+//            }
+//        }
+//        throw new FileNotFoundException(customerId, id);
+//    }
+//
+//    public List<File> getFiles() {
+//        Iterable<Customer> customers = findAll();
+//
+//        ArrayList<File> files = new ArrayList<File>();
+//        customers.forEach(customer -> files.addAll(customer.getCustomerFiles()));
+//        return files;
+//    }
 
 
 }

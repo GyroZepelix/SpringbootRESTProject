@@ -16,15 +16,13 @@ import javax.persistence.*;
 public class File {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long ID;
-
-    private Long CustomerId;
+    private Long id;
     private String docName;
     private String docType;
     @Lob
     private byte[] data;
 
-    @OneToOne
+    @ManyToOne
     private Customer customer;
 
     protected File() {}
