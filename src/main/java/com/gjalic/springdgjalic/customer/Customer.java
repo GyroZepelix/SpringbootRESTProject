@@ -1,5 +1,6 @@
 package com.gjalic.springdgjalic.customer;
 
+import com.gjalic.springdgjalic.file.File;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -7,7 +8,6 @@ import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 @Entity

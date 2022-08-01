@@ -1,5 +1,6 @@
 package com.gjalic.springdgjalic.customer;
 
+import com.gjalic.springdgjalic.file.File;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.HttpHeaders;
@@ -9,7 +10,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.annotation.Resource;
 import java.util.List;
 
 @RestController
@@ -54,43 +54,6 @@ public class CustomerController {
         service.deleteById(id);
     }
 
-    @GetMapping("/customers/files")
-    public String getFiles(Model model) {
-        List<File> files = service.getFiles();
-        model.addAttribute("docs", files);
-        return "doc";
-    }
-
-    @GetMapping("/customers/{id}/files")
-    public String  getFilesFromOne(@PathVariable Long id ,Model model) {
-        List<File> files = service.getFilesFromCustomer(id);
-        model.addAttribute("docs", files);
-        return "doc";
-    }
-
-//    @PostMapping("/customers/{id}/files")
-//    public String UploadMultipleFiles(@RequestBody() MultipartFile[] files, @PathVariable Long id) {
-//        for (MultipartFile file: files) {
-//            service.saveFile(file, id);
-//        }
-//        return "redirect:/";
-//    }
-
-    @PostMapping(value = "/customers/{id}/files",
-            consumes = {MediaType.MULTIPART_FORM_DATA_VALUE},
-            produces = {MediaType.APPLICATION_JSON_VALUE} )
-    public ResponseEntity<String> UploadMultipleFiles(@RequestParam MultipartFile file , @PathVariable Long id) {
-        service.saveFile(file, id);
-        return ResponseEntity.ok("Success " + file.getOriginalFilename());
-    }
-
-    @GetMapping("/customers/{cId}/files/{id}")
-    public ResponseEntity<ByteArrayResource> downloadFile(@PathVariable("cId") Long customerId, @PathVariable("id") Long id) {
-        File file = service.getFile(customerId, id);
-        return ResponseEntity.ok()
-                .contentType(MediaType.parseMediaType(file.getDocType()))
-                .header(HttpHeaders.CONTENT_DISPOSITION,"attachment:filename=\""+file.getDocName()+"\"")
-                .body(new ByteArrayResource(file.getData()));
 
 
     }

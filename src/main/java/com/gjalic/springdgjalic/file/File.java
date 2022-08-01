@@ -1,5 +1,6 @@
-package com.gjalic.springdgjalic.customer;
+package com.gjalic.springdgjalic.file;
 
+import com.gjalic.springdgjalic.customer.Customer;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -16,17 +17,21 @@ public class File {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long ID;
+
+    private Long CustomerId;
     private String docName;
     private String docType;
-
     @Lob
     private byte[] data;
 
+    @OneToOne
+    private Customer customer;
+
     protected File() {}
-    public File(String docName, String docType, byte[] data) {
-        this.ID = ID;
+    public File(String docName, String docType, byte[] data, Customer customer) {
         this.docName = docName;
         this.docType = docType;
         this.data = data;
+        this.customer = customer;
     }
 }

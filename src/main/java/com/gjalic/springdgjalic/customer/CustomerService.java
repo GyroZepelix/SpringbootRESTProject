@@ -1,5 +1,7 @@
 package com.gjalic.springdgjalic.customer;
 
+import com.gjalic.springdgjalic.file.File;
+import com.gjalic.springdgjalic.file.FileNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -56,15 +58,16 @@ public class CustomerService {
 
     //--------------------<  File Handling  >------------------------------
 
-    public Customer saveFile(MultipartFile file, long id) {
+    public File saveFile(MultipartFile file, long id) {
         String documentName = file.getOriginalFilename();
         try {
             findById(id).getCustomerFiles().add((new File( documentName, file.getContentType(), file.getBytes())));
         }
+
         catch (Exception e) {
             e.printStackTrace();
         }
-        return null;
+        return findById(id).getCustomerFiles().get();
     }
     public List<File> getFilesFromCustomer(long customerId) {
         return findById(customerId).getCustomerFiles();
