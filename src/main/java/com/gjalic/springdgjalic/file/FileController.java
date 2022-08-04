@@ -1,19 +1,14 @@
 package com.gjalic.springdgjalic.file;
 
-import com.gjalic.springdgjalic.customer.Customer;
 import com.gjalic.springdgjalic.customer.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cglib.core.ClassEmitter;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.util.List;
 
 @RestController
 public class FileController {
@@ -42,7 +37,7 @@ public class FileController {
     @PostMapping(value = "/customers/{id}/files",
             consumes = {MediaType.MULTIPART_FORM_DATA_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE})
-    public Iterable<File> UploadFile(@RequestParam MultipartFile file, @PathVariable Long id) {
+    public Iterable<File> uploadFile(@RequestParam MultipartFile file, @PathVariable Long id) {
         try {
             service.save(new File(file.getOriginalFilename(), file.getContentType(), file.getBytes(), cService.findById(id)));
         }
@@ -57,8 +52,8 @@ public class FileController {
     @GetMapping("/customers/{cId}/files/{id}")
     public ResponseEntity<ByteArrayResource> downloadFile(@PathVariable("cId") Long customerId, @PathVariable("id") Long id) {
         Iterable<File> files = service.findByCustomer(cService.findById(customerId));
-        for(File file : files) {
-            if (file.getId()==id)
+        for (File file : files) {
+            if (file.getId() == id)
                 return ResponseEntity.ok()
                         .contentType(MediaType.parseMediaType(file.getDocType()))
                         .header(HttpHeaders.CONTENT_DISPOSITION, "attachment:filename=\"" + file.getDocName() + "\"")
@@ -66,26 +61,6 @@ public class FileController {
         }
         return null;
     }
-    //----------------------
-
-
-
-//    @PostMapping("/customers/{id}/files")
-//    public String UploadMultipleFiles(@RequestBody() MultipartFile[] files, @PathVariable Long id) {
-//        for (MultipartFile file: files) {
-//            service.saveFile(file, id);
-//        }
-//        return "redirect:/";
-//    }
-
-//    @PostMapping(value = "/customers/{id}/files",
-//            consumes = {MediaType.MULTIPART_FORM_DATA_VALUE},
-//            produces = {MediaType.APPLICATION_JSON_VALUE})
-//    public File UploadMultipleFiles(@RequestParam MultipartFile file, @PathVariable Long id) {
-//        File thefile = service.saveFile(file, id);
-//        return thefile;
-//    }
-
 
 
 }
