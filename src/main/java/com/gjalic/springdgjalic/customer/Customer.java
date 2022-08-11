@@ -5,6 +5,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -19,7 +20,7 @@ import java.util.List;
 public class Customer {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name="Ime")
@@ -31,6 +32,7 @@ public class Customer {
     private Boolean active;
 
     @OneToMany
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private List<File> customerFiles = new ArrayList<File>();
     protected Customer() {}
 

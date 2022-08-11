@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:4200")
 public class FileController {
 
     @Autowired
@@ -49,18 +50,18 @@ public class FileController {
 
     }
 
-    @GetMapping("/customers/{cId}/files/{id}")
-    public ResponseEntity<ByteArrayResource> downloadFile(@PathVariable("cId") Long customerId, @PathVariable("id") Long id) {
-        Iterable<File> files = service.findByCustomer(cService.findById(customerId));
-        for (File file : files) {
-            if (file.getId() == id)
-                return ResponseEntity.ok()
-                        .contentType(MediaType.parseMediaType(file.getDocType()))
-                        .header(HttpHeaders.CONTENT_DISPOSITION, "attachment:filename=\"" + file.getDocName() + "\"")
-                        .body(new ByteArrayResource(file.getData()));
-        }
-        return null;
+    @GetMapping("/customers/files/{id}")
+    public ResponseEntity<ByteArrayResource> downloadFile(@PathVariable("id") Long id) {
+        File file = service.findById(id);
+        return ResponseEntity.ok()
+                .contentType(MediaType.parseMediaType(file.getDocType()))
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment:filename=\"" + file.getDocName() + "\"")
+                .body(new ByteArrayResource(file.getData()));
     }
 
+    @DeleteMapping("/customers/files/{id}")
+    public void deleteFile(@PathVariable("id") Long id) {
+        service.deleteById(id);
+    }
 
 }

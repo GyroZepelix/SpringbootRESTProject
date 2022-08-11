@@ -15,10 +15,12 @@ import javax.persistence.*;
 @EqualsAndHashCode
 public class File {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String docName;
     private String docType;
+
+    private Integer docSize;
     @Lob
     private byte[] data;
 
@@ -31,5 +33,6 @@ public class File {
         this.docType = docType;
         this.data = data;
         this.customer = customer;
+        this.docSize = data.length;
     }
 }

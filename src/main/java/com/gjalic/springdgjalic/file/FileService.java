@@ -34,6 +34,10 @@ public class FileService {
 
     public File save(File file) {return repository.save(file);}
 
+    public void deleteById(long id) { repository.deleteById(id); }
+
+    public File findById(long id) { return repository.findById(id); }
+
 
 //    public File saveFile(MultipartFile file, long id) {
 //        String documentName = file.getOriginalFilename();
